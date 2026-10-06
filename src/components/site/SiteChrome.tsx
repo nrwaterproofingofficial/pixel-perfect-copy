@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { Menu, Phone, MessageCircle, X, Droplet, Mail, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { site, whatsappLink } from "@/lib/site";
@@ -17,12 +17,12 @@ const nav = [
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link to="/" className="flex items-center gap-2.5">
+    <Link to="/" className="site-logo flex items-center gap-3">
       <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground">
         <Droplet className="size-5" fill="currentColor" />
       </span>
       <span className="leading-tight">
-        <span className={`block text-[0.95rem] font-bold ${light ? "text-ink-foreground" : "text-primary"}`}>NR Waterproofing</span>
+        <span className={`logo-name block text-[0.95rem] font-bold ${light ? "text-ink-foreground" : "text-foreground"}`}>NR WATERPROOFING</span>
         <span className={`block text-[0.65rem] font-medium uppercase tracking-[0.18em] ${light ? "text-ink-foreground/60" : "text-muted-foreground"}`}>Services · Kurnool</span>
       </span>
     </Link>
@@ -31,14 +31,23 @@ export function Logo({ light = false }: { light?: boolean }) {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const immersive = location.pathname === "/" && !scrolled && !open;
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 32);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
-      <div className="container-site flex h-16 items-center justify-between gap-4 lg:h-20">
-        <Logo />
+    <header className={`site-header sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl ${immersive ? "is-immersive" : ""} ${location.pathname === "/" ? "home-header" : ""}`}>
+      <div className="container-site flex h-20 items-center justify-between gap-4 lg:h-24">
+        <Logo light={immersive} />
         <nav className="hidden items-center gap-1 xl:flex">
           {nav.map((n) => (
             <Link key={n.to} to={n.to} activeOptions={{ exact: n.to === "/" }}
-              className="rounded-full px-3 py-2 text-sm font-medium text-foreground/75 transition-colors hover:text-primary"
+              className="nav-link px-3 py-2 text-sm font-medium text-foreground/75 transition-colors hover:text-primary"
               activeProps={{ className: "text-primary font-semibold" }}>
               {n.label}
             </Link>
@@ -54,7 +63,7 @@ export function SiteHeader() {
           <Button asChild className="hidden sm:inline-flex">
             <Link to="/contact" hash="inspection">Get Free Inspection</Link>
           </Button>
-          <Button size="icon" variant="ghost" className="xl:hidden" onClick={() => setOpen(!open)} aria-label="Menu">
+          <Button size="icon" variant="ghost" className="xl:hidden" onClick={() => setOpen(!open)} aria-label="Menu" aria-expanded={open}>
             {open ? <X /> : <Menu />}
           </Button>
         </div>

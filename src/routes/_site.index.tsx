@@ -7,6 +7,7 @@ import { services, quickServiceSlugs, leakageInspection } from "@/data/services"
 import { images, inspectionChecks, processSteps, projects, reviews, faqs } from "@/data/content";
 import { seo } from "@/lib/seo";
 import { site } from "@/lib/site";
+import architecturalRoof from "@/assets/architectural-roof.jpg";
 
 export const Route = createFileRoute("/_site/")({
   head: () => seo("Waterproofing Services in Kurnool | NR Waterproofing Services",
@@ -21,35 +22,38 @@ const trust = [
 ] as const;
 
 function HomePage() {
-  const quick = [...quickServiceSlugs.map((s) => services.find((x) => x.slug === s)!), leakageInspection];
+  const quick = quickServiceSlugs.flatMap((slug) => {
+    const service = services.find((item) => item.slug === slug);
+    return service ? [service] : [];
+  }).slice(0, 3);
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-ink text-ink-foreground">
-        <img src={images.heroTerrace} alt="Waterproofing coating being applied on a terrace in Kurnool" width={1600} height={1072}
-          className="absolute inset-0 size-full object-cover opacity-45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/20" />
-        <div className="container-site relative grid min-h-[620px] items-center py-20 md:min-h-[700px]">
-          <div className="animate-rise max-w-2xl">
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-ink-foreground/20 bg-ink-foreground/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em]">
-              <ShieldCheck className="size-4" /> Waterproofing Services in Kurnool
+      <section className="home-hero relative overflow-hidden bg-ink text-ink-foreground">
+        <img src={architecturalRoof} alt="Architectural illustration of a finished waterproofed residential rooftop" width={1920} height={1088}
+          className="hero-photo absolute inset-0 size-full object-cover" fetchPriority="high" />
+        <div className="hero-shade absolute inset-0" />
+        <div className="hero-content container-site relative flex items-center">
+          <div className="max-w-4xl">
+            <p className="hero-eyebrow mb-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase text-hero-accent">
+              <span className="hero-status size-2 rounded-full bg-primary" /> Waterproofing Services in Kurnool
             </p>
-            <h1 className="text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl">Stop Water Leakage Before It Damages Your Building.</h1>
-            <p className="mt-6 max-w-xl text-lg text-ink-foreground/80">
+            <h1 className="hero-title"><span className="hero-serif block">Stop Water Leakage</span><span className="hero-statement mt-4 block text-hero-muted">Before It Damages<br className="hidden sm:block" /> Your Building.</span></h1>
+            <p className="hero-description mt-8 max-w-xl text-lg leading-relaxed text-ink-foreground/80">
               Professional waterproofing solutions for homes, apartments and commercial buildings in Kurnool, Andhra Pradesh.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3"><ContactButtons light /></div>
+            <div className="hero-actions mt-8 flex flex-wrap gap-4"><ContactButtons light /></div>
           </div>
         </div>
       </section>
 
       {/* Brand strip */}
-      <div className="border-b border-border bg-muted">
-        <p className="container-site py-6 text-center text-sm font-medium text-primary md:text-base">"{site.brandMessage}"</p>
+      <div className="brand-quote relative z-10 bg-card">
+        <p className="container-site text-center text-foreground">“We don't just cover the surface. We identify the problem and select the <span className="text-primary underline decoration-primary/25 underline-offset-8">appropriate waterproofing solution</span> for the site condition.”</p>
       </div>
 
       {/* Quick services */}
-      <Section>
+      <Section className="home-services">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SectionHeading eyebrow="What we do" title="Waterproofing for every part of your building" />
           <Button asChild variant="outline" className="mb-10 md:mb-14"><Link to="/services">All services <ArrowRight /></Link></Button>
