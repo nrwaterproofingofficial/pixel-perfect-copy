@@ -9,50 +9,526 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as SiteRouteImport } from './routes/_site'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as SiteIndexRouteImport } from './routes/_site.index'
+import { Route as SiteAboutRouteImport } from './routes/_site.about'
+import { Route as SiteCertificateRouteImport } from './routes/_site.certificate'
+import { Route as SiteContactRouteImport } from './routes/_site.contact'
+import { Route as SiteFaqRouteImport } from './routes/_site.faq'
+import { Route as SiteLeakageInspectionRouteImport } from './routes/_site.leakage-inspection'
+import { Route as SiteProcessRouteImport } from './routes/_site.process'
+import { Route as SiteProjectsRouteImport } from './routes/_site.projects'
+import { Route as SiteReviewsRouteImport } from './routes/_site.reviews'
+import { Route as SiteServiceAreasRouteImport } from './routes/_site.service-areas'
+import { Route as SiteWaterproofingSystemsRouteImport } from './routes/_site.waterproofing-systems'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminCertificatesRouteImport } from './routes/admin.certificates'
+import { Route as AdminEnquiriesRouteImport } from './routes/admin.enquiries'
+import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
+import { Route as AdminReviewsRouteImport } from './routes/admin.reviews'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminLoginRouteImport } from './routes/admin_.login'
+import { Route as SiteServicesIndexRouteImport } from './routes/_site.services.index'
+import { Route as SiteServicesSlugRouteImport } from './routes/_site.services.$slug'
 
-const IndexRoute = IndexRouteImport.update({
+const SiteRoute = SiteRouteImport.update({
+  id: '/_site',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteAboutRoute = SiteAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteCertificateRoute = SiteCertificateRouteImport.update({
+  id: '/certificate',
+  path: '/certificate',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteContactRoute = SiteContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteFaqRoute = SiteFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteLeakageInspectionRoute = SiteLeakageInspectionRouteImport.update({
+  id: '/leakage-inspection',
+  path: '/leakage-inspection',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProcessRoute = SiteProcessRouteImport.update({
+  id: '/process',
+  path: '/process',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProjectsRoute = SiteProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteReviewsRoute = SiteReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteServiceAreasRoute = SiteServiceAreasRouteImport.update({
+  id: '/service-areas',
+  path: '/service-areas',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteWaterproofingSystemsRoute =
+  SiteWaterproofingSystemsRouteImport.update({
+    id: '/waterproofing-systems',
+    path: '/waterproofing-systems',
+    getParentRoute: () => SiteRoute,
+  } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCertificatesRoute = AdminCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEnquiriesRoute = AdminEnquiriesRouteImport.update({
+  id: '/enquiries',
+  path: '/enquiries',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProjectsRoute = AdminProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReviewsRoute = AdminReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin_/login',
+  path: '/admin/login',
   getParentRoute: () => rootRouteImport,
+} as any)
+const SiteServicesIndexRoute = SiteServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteServicesSlugRoute = SiteServicesSlugRouteImport.update({
+  id: '/services/$slug',
+  path: '/services/$slug',
+  getParentRoute: () => SiteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof SiteIndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/about': typeof SiteAboutRoute
+  '/certificate': typeof SiteCertificateRoute
+  '/contact': typeof SiteContactRoute
+  '/faq': typeof SiteFaqRoute
+  '/leakage-inspection': typeof SiteLeakageInspectionRoute
+  '/process': typeof SiteProcessRoute
+  '/projects': typeof SiteProjectsRoute
+  '/reviews': typeof SiteReviewsRoute
+  '/service-areas': typeof SiteServiceAreasRoute
+  '/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/enquiries': typeof AdminEnquiriesRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
+  '/services/$slug': typeof SiteServicesSlugRoute
+  '/services/': typeof SiteServicesIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/about': typeof SiteAboutRoute
+  '/certificate': typeof SiteCertificateRoute
+  '/contact': typeof SiteContactRoute
+  '/faq': typeof SiteFaqRoute
+  '/leakage-inspection': typeof SiteLeakageInspectionRoute
+  '/process': typeof SiteProcessRoute
+  '/projects': typeof SiteProjectsRoute
+  '/reviews': typeof SiteReviewsRoute
+  '/service-areas': typeof SiteServiceAreasRoute
+  '/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/enquiries': typeof AdminEnquiriesRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/': typeof SiteIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/services/$slug': typeof SiteServicesSlugRoute
+  '/services': typeof SiteServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_site': typeof SiteRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
+  '/_site/about': typeof SiteAboutRoute
+  '/_site/certificate': typeof SiteCertificateRoute
+  '/_site/contact': typeof SiteContactRoute
+  '/_site/faq': typeof SiteFaqRoute
+  '/_site/leakage-inspection': typeof SiteLeakageInspectionRoute
+  '/_site/process': typeof SiteProcessRoute
+  '/_site/projects': typeof SiteProjectsRoute
+  '/_site/reviews': typeof SiteReviewsRoute
+  '/_site/service-areas': typeof SiteServiceAreasRoute
+  '/_site/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/enquiries': typeof AdminEnquiriesRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin_/login': typeof AdminLoginRoute
+  '/_site/': typeof SiteIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/_site/services/$slug': typeof SiteServicesSlugRoute
+  '/_site/services/': typeof SiteServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/about'
+    | '/certificate'
+    | '/contact'
+    | '/faq'
+    | '/leakage-inspection'
+    | '/process'
+    | '/projects'
+    | '/reviews'
+    | '/service-areas'
+    | '/waterproofing-systems'
+    | '/admin/certificates'
+    | '/admin/enquiries'
+    | '/admin/projects'
+    | '/admin/reviews'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin/login'
+    | '/admin/'
+    | '/services/$slug'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/about'
+    | '/certificate'
+    | '/contact'
+    | '/faq'
+    | '/leakage-inspection'
+    | '/process'
+    | '/projects'
+    | '/reviews'
+    | '/service-areas'
+    | '/waterproofing-systems'
+    | '/admin/certificates'
+    | '/admin/enquiries'
+    | '/admin/projects'
+    | '/admin/reviews'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin/login'
+    | '/'
+    | '/admin'
+    | '/services/$slug'
+    | '/services'
+  id:
+    | '__root__'
+    | '/_site'
+    | '/admin'
+    | '/_site/about'
+    | '/_site/certificate'
+    | '/_site/contact'
+    | '/_site/faq'
+    | '/_site/leakage-inspection'
+    | '/_site/process'
+    | '/_site/projects'
+    | '/_site/reviews'
+    | '/_site/service-areas'
+    | '/_site/waterproofing-systems'
+    | '/admin/certificates'
+    | '/admin/enquiries'
+    | '/admin/projects'
+    | '/admin/reviews'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin_/login'
+    | '/_site/'
+    | '/admin/'
+    | '/_site/services/$slug'
+    | '/_site/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  SiteRoute: typeof SiteRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_site': {
+      id: '/_site'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof SiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_site/': {
+      id: '/_site/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof SiteIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/about': {
+      id: '/_site/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof SiteAboutRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/certificate': {
+      id: '/_site/certificate'
+      path: '/certificate'
+      fullPath: '/certificate'
+      preLoaderRoute: typeof SiteCertificateRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/contact': {
+      id: '/_site/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof SiteContactRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/faq': {
+      id: '/_site/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof SiteFaqRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/leakage-inspection': {
+      id: '/_site/leakage-inspection'
+      path: '/leakage-inspection'
+      fullPath: '/leakage-inspection'
+      preLoaderRoute: typeof SiteLeakageInspectionRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/process': {
+      id: '/_site/process'
+      path: '/process'
+      fullPath: '/process'
+      preLoaderRoute: typeof SiteProcessRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/projects': {
+      id: '/_site/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof SiteProjectsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/reviews': {
+      id: '/_site/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof SiteReviewsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/service-areas': {
+      id: '/_site/service-areas'
+      path: '/service-areas'
+      fullPath: '/service-areas'
+      preLoaderRoute: typeof SiteServiceAreasRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/waterproofing-systems': {
+      id: '/_site/waterproofing-systems'
+      path: '/waterproofing-systems'
+      fullPath: '/waterproofing-systems'
+      preLoaderRoute: typeof SiteWaterproofingSystemsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/certificates': {
+      id: '/admin/certificates'
+      path: '/certificates'
+      fullPath: '/admin/certificates'
+      preLoaderRoute: typeof AdminCertificatesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/enquiries': {
+      id: '/admin/enquiries'
+      path: '/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AdminEnquiriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/projects': {
+      id: '/admin/projects'
+      path: '/projects'
+      fullPath: '/admin/projects'
+      preLoaderRoute: typeof AdminProjectsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reviews': {
+      id: '/admin/reviews'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AdminReviewsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin_/login': {
+      id: '/admin_/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_site/services/': {
+      id: '/_site/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof SiteServicesIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/services/$slug': {
+      id: '/_site/services/$slug'
+      path: '/services/$slug'
+      fullPath: '/services/$slug'
+      preLoaderRoute: typeof SiteServicesSlugRouteImport
+      parentRoute: typeof SiteRoute
     }
   }
 }
 
+interface SiteRouteChildren {
+  SiteAboutRoute: typeof SiteAboutRoute
+  SiteCertificateRoute: typeof SiteCertificateRoute
+  SiteContactRoute: typeof SiteContactRoute
+  SiteFaqRoute: typeof SiteFaqRoute
+  SiteLeakageInspectionRoute: typeof SiteLeakageInspectionRoute
+  SiteProcessRoute: typeof SiteProcessRoute
+  SiteProjectsRoute: typeof SiteProjectsRoute
+  SiteReviewsRoute: typeof SiteReviewsRoute
+  SiteServiceAreasRoute: typeof SiteServiceAreasRoute
+  SiteWaterproofingSystemsRoute: typeof SiteWaterproofingSystemsRoute
+  SiteIndexRoute: typeof SiteIndexRoute
+  SiteServicesSlugRoute: typeof SiteServicesSlugRoute
+  SiteServicesIndexRoute: typeof SiteServicesIndexRoute
+}
+
+const SiteRouteChildren: SiteRouteChildren = {
+  SiteAboutRoute: SiteAboutRoute,
+  SiteCertificateRoute: SiteCertificateRoute,
+  SiteContactRoute: SiteContactRoute,
+  SiteFaqRoute: SiteFaqRoute,
+  SiteLeakageInspectionRoute: SiteLeakageInspectionRoute,
+  SiteProcessRoute: SiteProcessRoute,
+  SiteProjectsRoute: SiteProjectsRoute,
+  SiteReviewsRoute: SiteReviewsRoute,
+  SiteServiceAreasRoute: SiteServiceAreasRoute,
+  SiteWaterproofingSystemsRoute: SiteWaterproofingSystemsRoute,
+  SiteIndexRoute: SiteIndexRoute,
+  SiteServicesSlugRoute: SiteServicesSlugRoute,
+  SiteServicesIndexRoute: SiteServicesIndexRoute,
+}
+
+const SiteRouteWithChildren = SiteRoute._addFileChildren(SiteRouteChildren)
+
+interface AdminRouteChildren {
+  AdminCertificatesRoute: typeof AdminCertificatesRoute
+  AdminEnquiriesRoute: typeof AdminEnquiriesRoute
+  AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminReviewsRoute: typeof AdminReviewsRoute
+  AdminServicesRoute: typeof AdminServicesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCertificatesRoute: AdminCertificatesRoute,
+  AdminEnquiriesRoute: AdminEnquiriesRoute,
+  AdminProjectsRoute: AdminProjectsRoute,
+  AdminReviewsRoute: AdminReviewsRoute,
+  AdminServicesRoute: AdminServicesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  SiteRoute: SiteRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
