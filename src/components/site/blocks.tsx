@@ -17,7 +17,7 @@ export function Section({ children, className = "", id, muted }: { children: Rea
 
 export function SectionHeading({ eyebrow, title, intro, center }: { eyebrow?: string; title: ReactNode; intro?: ReactNode; center?: boolean }) {
   return (
-    <div className={`mb-10 max-w-2xl md:mb-14 ${center ? "mx-auto text-center" : ""}`}>
+    <div className={`section-heading mb-10 max-w-2xl md:mb-14 ${center ? "mx-auto text-center" : ""}`}>
       {eyebrow && <p className="eyebrow mb-3"><span className="h-px w-6 bg-secondary" />{eyebrow}</p>}
       <h2 className="text-3xl font-bold text-primary md:text-4xl">{title}</h2>
       {intro && <p className="mt-4 text-muted-foreground md:text-lg">{intro}</p>}
@@ -27,7 +27,7 @@ export function SectionHeading({ eyebrow, title, intro, center }: { eyebrow?: st
 
 export function PageHero({ eyebrow, title, intro, children }: { eyebrow: string; title: ReactNode; intro?: ReactNode; children?: ReactNode }) {
   return (
-    <section className="water-lines relative overflow-hidden border-b border-border bg-muted">
+    <section className="page-hero relative overflow-hidden border-b border-border bg-muted">
       <div className="container-site animate-rise py-16 md:py-24">
         <p className="eyebrow mb-4"><span className="h-px w-6 bg-secondary" />{eyebrow}</p>
         <h1 className="max-w-3xl text-4xl font-bold leading-tight text-primary md:text-5xl">{title}</h1>
@@ -46,7 +46,7 @@ export function ContactButtons({ inspection = true, light = false }: { inspectio
           <Link to="/contact" hash="inspection">Get Free Inspection <ArrowRight /></Link>
         </Button>
       )}
-      <Button asChild size="lg" variant="whatsapp">
+      <Button asChild size="lg" variant={light ? "ghostLight" : "whatsapp"}>
         <a href={whatsappLink()} target="_blank" rel="noreferrer"><MessageCircle /> WhatsApp Now</a>
       </Button>
       <Button asChild size="lg" variant={light ? "ghostLight" : "outline"}>
@@ -58,9 +58,9 @@ export function ContactButtons({ inspection = true, light = false }: { inspectio
 
 export function CtaBand({ title = "Leakage problem? Get it inspected first.", text = "Share photos on WhatsApp or book a free site inspection in Kurnool." }: { title?: string; text?: string }) {
   return (
-    <section className="py-16 md:py-20">
+    <section className="site-cta py-16 md:py-20">
       <div className="container-site">
-        <div className="water-lines rounded-3xl bg-primary px-6 py-12 text-primary-foreground shadow-lift md:px-14 md:py-16">
+        <div className="py-4 text-primary-foreground md:py-8">
           <h2 className="max-w-2xl text-3xl font-bold md:text-4xl">{title}</h2>
           <p className="mt-3 max-w-xl text-primary-foreground/80">{text}</p>
           <div className="mt-8 flex flex-wrap gap-3"><ContactButtons light /></div>
@@ -75,8 +75,8 @@ export function ServiceCard({ service }: { service: Pick<Service, "slug" | "titl
   const to = service.slug === "leakage-inspection" ? "/leakage-inspection" : "/services/$slug";
   return (
     <Link to={to} params={{ slug: service.slug }}
-      className="group flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-lift">
-      <span className="mb-5 grid size-12 place-items-center rounded-xl bg-accent text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+      className="service-card group flex flex-col rounded-lg border border-border bg-card p-6 transition-all duration-300 hover:border-secondary/40">
+      <span className="service-icon mb-5 grid size-12 place-items-center rounded-lg bg-accent text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
         <Icon className="size-6" />
       </span>
       <h3 className="text-lg font-semibold text-foreground">{service.title}</h3>
