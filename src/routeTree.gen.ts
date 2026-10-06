@@ -11,6 +11,18 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SiteRouteImport } from './routes/_site'
 import { Route as SiteIndexRouteImport } from './routes/_site.index'
+import { Route as SiteAboutRouteImport } from './routes/_site.about'
+import { Route as SiteCertificateRouteImport } from './routes/_site.certificate'
+import { Route as SiteContactRouteImport } from './routes/_site.contact'
+import { Route as SiteFaqRouteImport } from './routes/_site.faq'
+import { Route as SiteLeakageInspectionRouteImport } from './routes/_site.leakage-inspection'
+import { Route as SiteProcessRouteImport } from './routes/_site.process'
+import { Route as SiteProjectsRouteImport } from './routes/_site.projects'
+import { Route as SiteReviewsRouteImport } from './routes/_site.reviews'
+import { Route as SiteServiceAreasRouteImport } from './routes/_site.service-areas'
+import { Route as SiteWaterproofingSystemsRouteImport } from './routes/_site.waterproofing-systems'
+import { Route as SiteServicesIndexRouteImport } from './routes/_site.services.index'
+import { Route as SiteServicesSlugRouteImport } from './routes/_site.services.$slug'
 
 const SiteRoute = SiteRouteImport.update({
   id: '/_site',
@@ -21,24 +33,162 @@ const SiteIndexRoute = SiteIndexRouteImport.update({
   path: '/',
   getParentRoute: () => SiteRoute,
 } as any)
+const SiteAboutRoute = SiteAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteCertificateRoute = SiteCertificateRouteImport.update({
+  id: '/certificate',
+  path: '/certificate',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteContactRoute = SiteContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteFaqRoute = SiteFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteLeakageInspectionRoute = SiteLeakageInspectionRouteImport.update({
+  id: '/leakage-inspection',
+  path: '/leakage-inspection',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProcessRoute = SiteProcessRouteImport.update({
+  id: '/process',
+  path: '/process',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteProjectsRoute = SiteProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteReviewsRoute = SiteReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteServiceAreasRoute = SiteServiceAreasRouteImport.update({
+  id: '/service-areas',
+  path: '/service-areas',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteWaterproofingSystemsRoute =
+  SiteWaterproofingSystemsRouteImport.update({
+    id: '/waterproofing-systems',
+    path: '/waterproofing-systems',
+    getParentRoute: () => SiteRoute,
+  } as any)
+const SiteServicesIndexRoute = SiteServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteServicesSlugRoute = SiteServicesSlugRouteImport.update({
+  id: '/services/$slug',
+  path: '/services/$slug',
+  getParentRoute: () => SiteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
+  '/about': typeof SiteAboutRoute
+  '/certificate': typeof SiteCertificateRoute
+  '/contact': typeof SiteContactRoute
+  '/faq': typeof SiteFaqRoute
+  '/leakage-inspection': typeof SiteLeakageInspectionRoute
+  '/process': typeof SiteProcessRoute
+  '/projects': typeof SiteProjectsRoute
+  '/reviews': typeof SiteReviewsRoute
+  '/service-areas': typeof SiteServiceAreasRoute
+  '/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
+  '/services/$slug': typeof SiteServicesSlugRoute
+  '/services/': typeof SiteServicesIndexRoute
 }
 export interface FileRoutesByTo {
+  '/about': typeof SiteAboutRoute
+  '/certificate': typeof SiteCertificateRoute
+  '/contact': typeof SiteContactRoute
+  '/faq': typeof SiteFaqRoute
+  '/leakage-inspection': typeof SiteLeakageInspectionRoute
+  '/process': typeof SiteProcessRoute
+  '/projects': typeof SiteProjectsRoute
+  '/reviews': typeof SiteReviewsRoute
+  '/service-areas': typeof SiteServiceAreasRoute
+  '/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
   '/': typeof SiteIndexRoute
+  '/services/$slug': typeof SiteServicesSlugRoute
+  '/services': typeof SiteServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_site': typeof SiteRouteWithChildren
+  '/_site/about': typeof SiteAboutRoute
+  '/_site/certificate': typeof SiteCertificateRoute
+  '/_site/contact': typeof SiteContactRoute
+  '/_site/faq': typeof SiteFaqRoute
+  '/_site/leakage-inspection': typeof SiteLeakageInspectionRoute
+  '/_site/process': typeof SiteProcessRoute
+  '/_site/projects': typeof SiteProjectsRoute
+  '/_site/reviews': typeof SiteReviewsRoute
+  '/_site/service-areas': typeof SiteServiceAreasRoute
+  '/_site/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
   '/_site/': typeof SiteIndexRoute
+  '/_site/services/$slug': typeof SiteServicesSlugRoute
+  '/_site/services/': typeof SiteServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/certificate'
+    | '/contact'
+    | '/faq'
+    | '/leakage-inspection'
+    | '/process'
+    | '/projects'
+    | '/reviews'
+    | '/service-areas'
+    | '/waterproofing-systems'
+    | '/services/$slug'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/_site' | '/_site/'
+  to:
+    | '/about'
+    | '/certificate'
+    | '/contact'
+    | '/faq'
+    | '/leakage-inspection'
+    | '/process'
+    | '/projects'
+    | '/reviews'
+    | '/service-areas'
+    | '/waterproofing-systems'
+    | '/'
+    | '/services/$slug'
+    | '/services'
+  id:
+    | '__root__'
+    | '/_site'
+    | '/_site/about'
+    | '/_site/certificate'
+    | '/_site/contact'
+    | '/_site/faq'
+    | '/_site/leakage-inspection'
+    | '/_site/process'
+    | '/_site/projects'
+    | '/_site/reviews'
+    | '/_site/service-areas'
+    | '/_site/waterproofing-systems'
+    | '/_site/'
+    | '/_site/services/$slug'
+    | '/_site/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -61,15 +211,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteIndexRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/_site/about': {
+      id: '/_site/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof SiteAboutRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/certificate': {
+      id: '/_site/certificate'
+      path: '/certificate'
+      fullPath: '/certificate'
+      preLoaderRoute: typeof SiteCertificateRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/contact': {
+      id: '/_site/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof SiteContactRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/faq': {
+      id: '/_site/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof SiteFaqRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/leakage-inspection': {
+      id: '/_site/leakage-inspection'
+      path: '/leakage-inspection'
+      fullPath: '/leakage-inspection'
+      preLoaderRoute: typeof SiteLeakageInspectionRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/process': {
+      id: '/_site/process'
+      path: '/process'
+      fullPath: '/process'
+      preLoaderRoute: typeof SiteProcessRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/projects': {
+      id: '/_site/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof SiteProjectsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/reviews': {
+      id: '/_site/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof SiteReviewsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/service-areas': {
+      id: '/_site/service-areas'
+      path: '/service-areas'
+      fullPath: '/service-areas'
+      preLoaderRoute: typeof SiteServiceAreasRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/waterproofing-systems': {
+      id: '/_site/waterproofing-systems'
+      path: '/waterproofing-systems'
+      fullPath: '/waterproofing-systems'
+      preLoaderRoute: typeof SiteWaterproofingSystemsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/services/': {
+      id: '/_site/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof SiteServicesIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/services/$slug': {
+      id: '/_site/services/$slug'
+      path: '/services/$slug'
+      fullPath: '/services/$slug'
+      preLoaderRoute: typeof SiteServicesSlugRouteImport
+      parentRoute: typeof SiteRoute
+    }
   }
 }
 
 interface SiteRouteChildren {
+  SiteAboutRoute: typeof SiteAboutRoute
+  SiteCertificateRoute: typeof SiteCertificateRoute
+  SiteContactRoute: typeof SiteContactRoute
+  SiteFaqRoute: typeof SiteFaqRoute
+  SiteLeakageInspectionRoute: typeof SiteLeakageInspectionRoute
+  SiteProcessRoute: typeof SiteProcessRoute
+  SiteProjectsRoute: typeof SiteProjectsRoute
+  SiteReviewsRoute: typeof SiteReviewsRoute
+  SiteServiceAreasRoute: typeof SiteServiceAreasRoute
+  SiteWaterproofingSystemsRoute: typeof SiteWaterproofingSystemsRoute
   SiteIndexRoute: typeof SiteIndexRoute
+  SiteServicesSlugRoute: typeof SiteServicesSlugRoute
+  SiteServicesIndexRoute: typeof SiteServicesIndexRoute
 }
 
 const SiteRouteChildren: SiteRouteChildren = {
+  SiteAboutRoute: SiteAboutRoute,
+  SiteCertificateRoute: SiteCertificateRoute,
+  SiteContactRoute: SiteContactRoute,
+  SiteFaqRoute: SiteFaqRoute,
+  SiteLeakageInspectionRoute: SiteLeakageInspectionRoute,
+  SiteProcessRoute: SiteProcessRoute,
+  SiteProjectsRoute: SiteProjectsRoute,
+  SiteReviewsRoute: SiteReviewsRoute,
+  SiteServiceAreasRoute: SiteServiceAreasRoute,
+  SiteWaterproofingSystemsRoute: SiteWaterproofingSystemsRoute,
   SiteIndexRoute: SiteIndexRoute,
+  SiteServicesSlugRoute: SiteServicesSlugRoute,
+  SiteServicesIndexRoute: SiteServicesIndexRoute,
 }
 
 const SiteRouteWithChildren = SiteRoute._addFileChildren(SiteRouteChildren)
