@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SiteRouteImport } from './routes/_site'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SiteIndexRouteImport } from './routes/_site.index'
 import { Route as SiteAboutRouteImport } from './routes/_site.about'
 import { Route as SiteCertificateRouteImport } from './routes/_site.certificate'
@@ -21,11 +22,24 @@ import { Route as SiteProjectsRouteImport } from './routes/_site.projects'
 import { Route as SiteReviewsRouteImport } from './routes/_site.reviews'
 import { Route as SiteServiceAreasRouteImport } from './routes/_site.service-areas'
 import { Route as SiteWaterproofingSystemsRouteImport } from './routes/_site.waterproofing-systems'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminCertificatesRouteImport } from './routes/admin.certificates'
+import { Route as AdminEnquiriesRouteImport } from './routes/admin.enquiries'
+import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
+import { Route as AdminReviewsRouteImport } from './routes/admin.reviews'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as SiteServicesIndexRouteImport } from './routes/_site.services.index'
 import { Route as SiteServicesSlugRouteImport } from './routes/_site.services.$slug'
 
 const SiteRoute = SiteRouteImport.update({
   id: '/_site',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SiteIndexRoute = SiteIndexRouteImport.update({
@@ -84,6 +98,46 @@ const SiteWaterproofingSystemsRoute =
     path: '/waterproofing-systems',
     getParentRoute: () => SiteRoute,
   } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCertificatesRoute = AdminCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEnquiriesRoute = AdminEnquiriesRouteImport.update({
+  id: '/enquiries',
+  path: '/enquiries',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProjectsRoute = AdminProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReviewsRoute = AdminReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin_/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SiteServicesIndexRoute = SiteServicesIndexRouteImport.update({
   id: '/services/',
   path: '/services/',
@@ -97,6 +151,7 @@ const SiteServicesSlugRoute = SiteServicesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/about': typeof SiteAboutRoute
   '/certificate': typeof SiteCertificateRoute
   '/contact': typeof SiteContactRoute
@@ -107,6 +162,14 @@ export interface FileRoutesByFullPath {
   '/reviews': typeof SiteReviewsRoute
   '/service-areas': typeof SiteServiceAreasRoute
   '/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/enquiries': typeof AdminEnquiriesRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
   '/services/$slug': typeof SiteServicesSlugRoute
   '/services/': typeof SiteServicesIndexRoute
 }
@@ -121,13 +184,22 @@ export interface FileRoutesByTo {
   '/reviews': typeof SiteReviewsRoute
   '/service-areas': typeof SiteServiceAreasRoute
   '/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/enquiries': typeof AdminEnquiriesRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/login': typeof AdminLoginRoute
   '/': typeof SiteIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/services/$slug': typeof SiteServicesSlugRoute
   '/services': typeof SiteServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_site': typeof SiteRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
   '/_site/about': typeof SiteAboutRoute
   '/_site/certificate': typeof SiteCertificateRoute
   '/_site/contact': typeof SiteContactRoute
@@ -138,7 +210,15 @@ export interface FileRoutesById {
   '/_site/reviews': typeof SiteReviewsRoute
   '/_site/service-areas': typeof SiteServiceAreasRoute
   '/_site/waterproofing-systems': typeof SiteWaterproofingSystemsRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/enquiries': typeof AdminEnquiriesRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin_/login': typeof AdminLoginRoute
   '/_site/': typeof SiteIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/_site/services/$slug': typeof SiteServicesSlugRoute
   '/_site/services/': typeof SiteServicesIndexRoute
 }
@@ -146,6 +226,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/about'
     | '/certificate'
     | '/contact'
@@ -156,6 +237,14 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/service-areas'
     | '/waterproofing-systems'
+    | '/admin/certificates'
+    | '/admin/enquiries'
+    | '/admin/projects'
+    | '/admin/reviews'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin/login'
+    | '/admin/'
     | '/services/$slug'
     | '/services/'
   fileRoutesByTo: FileRoutesByTo
@@ -170,12 +259,21 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/service-areas'
     | '/waterproofing-systems'
+    | '/admin/certificates'
+    | '/admin/enquiries'
+    | '/admin/projects'
+    | '/admin/reviews'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin/login'
     | '/'
+    | '/admin'
     | '/services/$slug'
     | '/services'
   id:
     | '__root__'
     | '/_site'
+    | '/admin'
     | '/_site/about'
     | '/_site/certificate'
     | '/_site/contact'
@@ -186,13 +284,23 @@ export interface FileRouteTypes {
     | '/_site/reviews'
     | '/_site/service-areas'
     | '/_site/waterproofing-systems'
+    | '/admin/certificates'
+    | '/admin/enquiries'
+    | '/admin/projects'
+    | '/admin/reviews'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin_/login'
     | '/_site/'
+    | '/admin/'
     | '/_site/services/$slug'
     | '/_site/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   SiteRoute: typeof SiteRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -202,6 +310,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof SiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_site/': {
@@ -281,6 +396,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteWaterproofingSystemsRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/certificates': {
+      id: '/admin/certificates'
+      path: '/certificates'
+      fullPath: '/admin/certificates'
+      preLoaderRoute: typeof AdminCertificatesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/enquiries': {
+      id: '/admin/enquiries'
+      path: '/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AdminEnquiriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/projects': {
+      id: '/admin/projects'
+      path: '/projects'
+      fullPath: '/admin/projects'
+      preLoaderRoute: typeof AdminProjectsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reviews': {
+      id: '/admin/reviews'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AdminReviewsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin_/login': {
+      id: '/admin_/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_site/services/': {
       id: '/_site/services/'
       path: '/services'
@@ -332,8 +503,32 @@ const SiteRouteChildren: SiteRouteChildren = {
 
 const SiteRouteWithChildren = SiteRoute._addFileChildren(SiteRouteChildren)
 
+interface AdminRouteChildren {
+  AdminCertificatesRoute: typeof AdminCertificatesRoute
+  AdminEnquiriesRoute: typeof AdminEnquiriesRoute
+  AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminReviewsRoute: typeof AdminReviewsRoute
+  AdminServicesRoute: typeof AdminServicesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCertificatesRoute: AdminCertificatesRoute,
+  AdminEnquiriesRoute: AdminEnquiriesRoute,
+  AdminProjectsRoute: AdminProjectsRoute,
+  AdminReviewsRoute: AdminReviewsRoute,
+  AdminServicesRoute: AdminServicesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   SiteRoute: SiteRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
