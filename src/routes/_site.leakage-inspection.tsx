@@ -36,7 +36,7 @@ function Page() {
       </Section>
       <Section id="inspection">
         <div className="grid gap-12 lg:grid-cols-2">
-          <div><SectionHeading eyebrow="FAQ" title="About inspections" /><FaqList items={[faqs[0], faqs[9], faqs[1]]} /></div>
+          <div><SectionHeading eyebrow="FAQ" title="About inspections" /><FaqList items={[0, 9, 1].map((i) => faqs[i]!)} /></div>
           <div><SectionHeading eyebrow="Book now" title="Request Leakage Inspection" /><InspectionForm source="Free Inspection" /></div>
         </div>
       </Section>

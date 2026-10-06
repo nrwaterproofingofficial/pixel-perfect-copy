@@ -13,7 +13,7 @@ function Page() {
     <CrudList<Row>
       title="Reviews" intro="Manage customer reviews shown on the website." noun="review" searchKey="name"
       initial={reviews}
-      blank={{ name: "", rating: 5, text: "", service: services[0].title, source: "Google", media: [] }}
+      blank={{ name: "", rating: 5, text: "", service: services[0]!.title, source: "Google", media: [] }}
       fields={[
         { key: "name", label: "Customer Name" }, { key: "rating", label: "Rating (1–5)", type: "number" },
         { key: "text", label: "Review Text", type: "textarea" },

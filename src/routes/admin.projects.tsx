@@ -10,7 +10,7 @@ function Page() {
     <CrudList<Project>
       title="Projects" intro="Add projects with before, in-progress and after photos." noun="project" searchKey="name"
       initial={projects}
-      blank={{ name: "", location: "Kurnool", service: services[0].title, problem: "", inspection: "", treatment: "", result: "", before: [], progress: [], after: [], completionDate: "" }}
+      blank={{ name: "", location: "Kurnool", service: services[0]!.title, problem: "", inspection: "", treatment: "", result: "", before: [], progress: [], after: [], completionDate: "" }}
       fields={[
         { key: "name", label: "Project Name" }, { key: "location", label: "Location" },
         { key: "service", label: "Service", type: "select", options: services.map((s) => s.title) },
