@@ -33,7 +33,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const immersive = location.pathname === "/" && !scrolled && !open;
+  const immersive = false;
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 32);
     update();

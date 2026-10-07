@@ -8,6 +8,7 @@ import { images, inspectionChecks, processSteps, projects, reviews, faqs } from 
 import { seo } from "@/lib/seo";
 import { site } from "@/lib/site";
 import architecturalRoof from "@/assets/architectural-roof.jpg";
+import { ServiceFinder } from "@/components/site/ServiceFinder";
 
 export const Route = createFileRoute("/_site/")({
   head: () => seo("Waterproofing Services in Kurnool | NR Waterproofing Services",
@@ -38,7 +39,7 @@ function HomePage() {
             <p className="hero-eyebrow mb-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase text-hero-accent">
               <span className="hero-status size-2 rounded-full bg-primary" /> Waterproofing Services in Kurnool
             </p>
-            <h1 className="hero-title"><span className="hero-serif block">Stop Water Leakage</span><span className="hero-statement mt-4 block text-hero-muted">Before It Damages<br className="hidden sm:block" /> Your Building.</span></h1>
+            <h1 className="hero-title">NR Waterproofing<span className="hero-statement mt-5 block text-hero-muted">Protect your space.<br />Start at the source.</span></h1>
             <p className="hero-description mt-8 max-w-xl text-lg leading-relaxed text-ink-foreground/80">
               Professional waterproofing solutions for homes, apartments and commercial buildings in Kurnool, Andhra Pradesh.
             </p>
@@ -53,13 +54,7 @@ function HomePage() {
       </div>
 
       {/* Quick services */}
-      <Section className="home-services">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <SectionHeading eyebrow="What we do" title="Waterproofing for every part of your building" />
-          <Button asChild variant="outline" className="mb-10 md:mb-14"><Link to="/services">All services <ArrowRight /></Link></Button>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{quick.map((s) => <ServiceCard key={s.slug} service={s} />)}</div>
-      </Section>
+      <Section className="home-services"><ServiceFinder /></Section>
 
       {/* Leakage inspection */}
       <section className="bg-primary py-16 text-primary-foreground md:py-24">
