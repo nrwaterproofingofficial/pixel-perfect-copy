@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, ShieldCheck, Search, Package, Brush, Layers, HardHat, Building, HeartHandshake, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck, Search, Package, Brush, Layers, HardHat, Building, HeartHandshake, Users, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading, ContactButtons, ServiceCard, CtaBand, ProjectCard, ReviewCard, FaqList } from "@/components/site/blocks";
 import { InspectionForm } from "@/components/site/InspectionForm";
 import { services, quickServiceSlugs, leakageInspection } from "@/data/services";
 import { images, inspectionChecks, processSteps, projects, reviews, faqs } from "@/data/content";
 import { seo } from "@/lib/seo";
-import { site } from "@/lib/site";
+import { site, whatsappLink } from "@/lib/site";
 import architecturalRoof from "@/assets/architectural-roof.jpg";
 import { StatsStrip, Marquee, BeforeAfter, CostEstimator } from "@/components/site/extras";
 
@@ -30,24 +30,95 @@ function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="home-hero relative overflow-hidden bg-ink text-ink-foreground">
-        <img src={architecturalRoof} alt="Architectural illustration of a finished waterproofed residential rooftop" width={1920} height={1088}
-          className="hero-photo absolute inset-0 size-full object-cover" fetchPriority="high" />
+      <section className="home-hero relative flex items-center overflow-hidden bg-ink text-ink-foreground">
+        <img
+          src={architecturalRoof}
+          alt="Waterproofed building structure in Kurnool"
+          width={1920}
+          height={1088}
+          className="hero-photo absolute inset-0 size-full object-cover"
+          fetchPriority="high"
+        />
         <div className="hero-shade absolute inset-0" />
-        <div className="hero-orb size-[420px] -right-24 top-24" />
-        <div className="hero-content container-site relative flex items-center">
-          <div className="max-w-4xl">
-            <p className="hero-eyebrow mb-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase text-hero-accent">
-              <span className="hero-status size-2 rounded-full bg-primary" /> Waterproofing Services in Kurnool
-            </p>
-            <h1 className="hero-title"><span className="hero-serif block">Stop Water Leakage</span><span className="hero-statement mt-4 block text-hero-muted">Before It Damages<br className="hidden sm:block" /> Your Building.</span></h1>
-            <p className="hero-description mt-8 max-w-xl text-lg leading-relaxed text-ink-foreground/80">
+        <div className="hero-orb size-[450px] -right-20 top-16 pointer-events-none opacity-40" />
+
+        <div className="hero-content container-site relative z-10 py-12 md:py-16 lg:py-20">
+          <div className="max-w-[800px]">
+            {/* Small Location / Service Badge */}
+            <div className="hero-eyebrow mb-6 inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-blue-200 backdrop-blur-md">
+              <span className="hero-status size-2 rounded-full bg-blue-400" />
+              Waterproofing Services in Kurnool
+            </div>
+
+            {/* Headline */}
+            <h1 className="hero-title max-w-[760px] leading-tight">
+              <span className="hero-serif block font-editorial italic font-normal text-white text-4xl sm:text-6xl lg:text-[72px] leading-[1.06]">
+                Stop Water Leakage
+              </span>
+              <span className="hero-statement mt-1 sm:mt-2 block font-sans font-bold text-white text-3xl sm:text-5xl lg:text-[60px] leading-[1.08] tracking-tight">
+                Before It Damages<br className="hidden sm:block" /> Your Building.
+              </span>
+            </h1>
+
+            {/* Description */}
+            <p className="hero-description mt-6 max-w-[600px] text-base sm:text-lg leading-relaxed text-white/90">
               Professional waterproofing solutions for homes, apartments and commercial buildings in Kurnool, Andhra Pradesh.
             </p>
-            <div className="hero-actions mt-8 flex flex-wrap gap-4"><ContactButtons light /></div>
+
+            {/* CTAs */}
+            <div className="hero-actions mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+              <Button
+                asChild
+                size="lg"
+                className="group rounded-lg bg-white text-primary hover:bg-white/90 font-bold text-sm h-12 px-6 shadow-md shadow-black/15 transition-all hover:-translate-y-0.5 active:translate-y-0 border-none"
+              >
+                <Link to="/contact" hash="inspection" className="flex items-center justify-center gap-2">
+                  <span>Get Free Inspection</span>
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-lg bg-white/10 hover:bg-white/20 text-white hover:text-white border-white/20 backdrop-blur-md font-semibold text-sm h-12 px-5 transition-all hover:-translate-y-0.5"
+              >
+                <a href={whatsappLink()} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2">
+                  <MessageCircle className="size-4 text-emerald-400" />
+                  <span>WhatsApp Now</span>
+                </a>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-lg bg-white/10 hover:bg-white/20 text-white hover:text-white border-white/20 backdrop-blur-md font-semibold text-sm h-12 px-5 transition-all hover:-translate-y-0.5"
+              >
+                <a href={site.phoneHref} className="flex items-center justify-center gap-2">
+                  <Phone className="size-4 text-blue-300" />
+                  <span>Call Now</span>
+                </a>
+              </Button>
+            </div>
+
+            {/* Small Premium Trust Badges */}
             <div className="hero-chips mt-10 flex flex-wrap gap-3">
-              {["Free site inspection", "Moisture diagnosis", "Written warranty"].map((t) => (
-                <span key={t} className="glass-chip inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm"><CheckCircle2 className="size-4 text-hero-accent" />{t}</span>
+              {[
+                "Free site inspection",
+                "Moisture diagnosis",
+                "Written warranty",
+              ].map((text) => (
+                <div
+                  key={text}
+                  className="inline-flex items-center gap-2.5 rounded-lg border border-white/15 bg-white/5 px-3.5 py-2 text-xs font-medium text-white/90 backdrop-blur-md hover:bg-white/10 transition-colors"
+                >
+                  <span className="grid size-5 place-items-center rounded-full bg-primary/30 text-blue-300">
+                    <CheckCircle2 className="size-3.5" />
+                  </span>
+                  <span>{text}</span>
+                </div>
               ))}
             </div>
           </div>
