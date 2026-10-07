@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, Phone, MessageCircle, X, Droplet, Mail, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { site, whatsappLink } from "@/lib/site";
@@ -31,14 +31,9 @@ export function Logo({ light = false }: { light?: boolean }) {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const immersive = false;
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 32);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
+  return () => window.removeEventListener("scroll", update);
   }, []);
   return (
     <header className={`site-header sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl ${immersive ? "is-immersive" : ""} ${location.pathname === "/" ? "home-header" : ""}`}>

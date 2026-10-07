@@ -1,12 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, ShieldCheck, Search, Package, Brush, Layers, HardHat, Building, HeartHandshake, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2, Search, Package, Brush, Layers, HardHat, Building, HeartHandshake, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Section, SectionHeading, ContactButtons, ServiceCard, CtaBand, ProjectCard, ReviewCard, FaqList } from "@/components/site/blocks";
+import { Section, SectionHeading, ContactButtons, CtaBand, ProjectCard, ReviewCard, FaqList } from "@/components/site/blocks";
 import { InspectionForm } from "@/components/site/InspectionForm";
-import { services, quickServiceSlugs, leakageInspection } from "@/data/services";
 import { images, inspectionChecks, processSteps, projects, reviews, faqs } from "@/data/content";
 import { seo } from "@/lib/seo";
-import { site } from "@/lib/site";
 import architecturalRoof from "@/assets/architectural-roof.jpg";
 import { ServiceFinder } from "@/components/site/ServiceFinder";
 
@@ -23,10 +21,6 @@ const trust = [
 ] as const;
 
 function HomePage() {
-  const quick = quickServiceSlugs.flatMap((slug) => {
-    const service = services.find((item) => item.slug === slug);
-    return service ? [service] : [];
-  }).slice(0, 3);
   return (
     <>
       {/* Hero */}

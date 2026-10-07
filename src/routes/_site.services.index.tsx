@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHero, Section, ServiceCard, CtaBand, ContactButtons } from "@/components/site/blocks";
-import { services, leakageInspection } from "@/data/services";
+import { PageHero, Section, CtaBand, ContactButtons } from "@/components/site/blocks";
 import { seo } from "@/lib/seo";
 import { ServiceFinder } from "@/components/site/ServiceFinder";
 
