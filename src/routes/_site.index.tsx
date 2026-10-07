@@ -8,6 +8,7 @@ import { images, inspectionChecks, processSteps, projects, reviews, faqs } from 
 import { seo } from "@/lib/seo";
 import { site } from "@/lib/site";
 import architecturalRoof from "@/assets/architectural-roof.jpg";
+import { StatsStrip, Marquee, BeforeAfter, CostEstimator } from "@/components/site/extras";
 
 export const Route = createFileRoute("/_site/")({
   head: () => seo("Waterproofing Services in Kurnool | NR Waterproofing Services",
@@ -33,6 +34,7 @@ function HomePage() {
         <img src={architecturalRoof} alt="Architectural illustration of a finished waterproofed residential rooftop" width={1920} height={1088}
           className="hero-photo absolute inset-0 size-full object-cover" fetchPriority="high" />
         <div className="hero-shade absolute inset-0" />
+        <div className="hero-orb size-[420px] -right-24 top-24" />
         <div className="hero-content container-site relative flex items-center">
           <div className="max-w-4xl">
             <p className="hero-eyebrow mb-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase text-hero-accent">
@@ -43,6 +45,11 @@ function HomePage() {
               Professional waterproofing solutions for homes, apartments and commercial buildings in Kurnool, Andhra Pradesh.
             </p>
             <div className="hero-actions mt-8 flex flex-wrap gap-4"><ContactButtons light /></div>
+            <div className="hero-chips mt-10 flex flex-wrap gap-3">
+              {["Free site inspection", "Moisture diagnosis", "Written warranty"].map((t) => (
+                <span key={t} className="glass-chip inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm"><CheckCircle2 className="size-4 text-hero-accent" />{t}</span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -51,6 +58,10 @@ function HomePage() {
       <div className="brand-quote relative z-10 bg-card">
         <p className="container-site text-center text-foreground">“We don't just cover the surface. We identify the problem and select the <span className="text-primary underline decoration-primary/25 underline-offset-8">appropriate waterproofing solution</span> for the site condition.”</p>
       </div>
+
+      <StatsStrip />
+
+      <div className="mt-24"><Marquee items={["Terrace", "Bathroom", "Water Tank", "Swimming Pool", "Damp Walls", "Cracks", "Expansion Joints", "Heat Reflective"]} /></div>
 
       {/* Quick services */}
       <Section className="home-services">
@@ -86,16 +97,36 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Why us */}
+      {/* Why us — bento */}
       <Section muted>
-        <SectionHeading center eyebrow="Why choose us" title="Professional Waterproofing Solutions in Kurnool" />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {trust.map(([Icon, t]) => (
-            <div key={t} className="rounded-2xl bg-card p-6 shadow-soft">
-              <Icon className="size-7 text-secondary" />
-              <h3 className="mt-4 font-semibold">{t}</h3>
-            </div>
+        <SectionHeading eyebrow="Why choose us" title="Professional waterproofing, engineered for Kurnool weather" />
+        <div className="bento">
+          <div className="bento-card is-wide is-tall is-dark flex flex-col justify-end p-0">
+            <img src={images.roofFinished} alt="Finished waterproofed terrace" loading="lazy" className="absolute inset-0 size-full object-cover opacity-60" />
+            <div className="relative p-8"><ShieldCheck className="size-9 text-hero-accent" />
+              <h3 className="mt-4 text-3xl font-bold">Diagnosis before treatment</h3>
+              <p className="mt-2 max-w-md text-ink-foreground/75">We trace the real leakage source with moisture checks — then choose the right system.</p></div>
+          </div>
+          {trust.slice(0, 2).map(([Icon, t]) => (
+            <div key={t} className="bento-card"><Icon className="size-7 text-primary" /><h3 className="mt-6 text-lg font-semibold">{t}</h3></div>
           ))}
+          <div className="bento-card is-wide is-blue flex flex-col justify-between">
+            <p className="stat-value">10+ yrs</p><p className="mt-4 text-primary-foreground/85">Of hands-on waterproofing across homes, apartments and commercial buildings.</p>
+          </div>
+          {trust.slice(2, 6).map(([Icon, t]) => (
+            <div key={t} className="bento-card"><Icon className="size-7 text-primary" /><h3 className="mt-6 text-lg font-semibold">{t}</h3></div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Before / after + estimator */}
+      <Section>
+        <div className="grid items-start gap-10 lg:grid-cols-[1.25fr_1fr]">
+          <div>
+            <SectionHeading eyebrow="See the difference" title="Drag to compare before & after" />
+            <BeforeAfter before={images.heroTerrace} after={images.roofFinished} />
+          </div>
+          <CostEstimator />
         </div>
       </Section>
 
@@ -104,8 +135,8 @@ function HomePage() {
         <SectionHeading eyebrow="Our process" title="Eight steps, done properly" intro="Every project follows the same disciplined sequence — from inspection to final check." />
         <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {processSteps.map((s) => (
-            <div key={s.n} className="bg-card p-6">
-              <span className="text-3xl font-bold text-accent-foreground/30">{s.n}</span>
+            <div key={s.n} className="step-card bg-card p-6">
+              <span className="step-n text-3xl font-bold text-accent-foreground/30 transition-colors">{s.n}</span>
               <h3 className="mt-2 font-semibold">{s.t}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
             </div>
@@ -125,7 +156,7 @@ function HomePage() {
       {/* Reviews */}
       <Section>
         <SectionHeading center eyebrow="Reviews" title="Our Work Speaks Through Our Customers." />
-        <div className="grid gap-5 md:grid-cols-3">{reviews.map((r) => <ReviewCard key={r.id} review={r} />)}</div>
+        <div className="marquee reviews-marquee"><div className="marquee-track">{[...reviews, ...reviews, ...reviews, ...reviews].map((r, i) => <ReviewCard key={i} review={r} />)}</div></div>
       </Section>
 
       {/* Form + FAQ */}

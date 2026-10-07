@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/site/SiteChrome";
+import { FloatingActions } from "@/components/site/extras";
 import { useEffect, useRef } from "react";
 
 export const Route = createFileRoute("/_site")({ component: SiteLayout });
@@ -32,6 +33,7 @@ function SiteLayout() {
       <SiteHeader />
       <main className="flex-1"><Outlet /></main>
       <SiteFooter />
+      <FloatingActions />
     </div>
   );
 }
