@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHero, Section, CtaBand, ContactButtons } from "@/components/site/blocks";
+import { PageHero, Section, ServiceCard, CtaBand, ContactButtons } from "@/components/site/blocks";
+import { services, leakageInspection } from "@/data/services";
 import { seo } from "@/lib/seo";
-import { ServiceFinder } from "@/components/site/ServiceFinder";
 
 export const Route = createFileRoute("/_site/services/")({
   head: () => seo("Waterproofing Services in Kurnool | Terrace, Bathroom, Tank & Commercial",
@@ -17,7 +17,10 @@ function ServicesPage() {
         <ContactButtons />
       </PageHero>
       <Section>
-        <ServiceFinder catalogue />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ServiceCard service={leakageInspection} />
+          {services.map((s) => <ServiceCard key={s.slug} service={s} />)}
+        </div>
       </Section>
       <CtaBand title="Not sure which service you need?" text="Book a leakage inspection and we'll recommend the right treatment." />
     </>
