@@ -12,7 +12,7 @@ export function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setN(to); return; }
     const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
+      if (!e?.isIntersecting) return;
       io.disconnect();
       const start = performance.now();
       const tick = (t: number) => {
