@@ -98,3 +98,5 @@ export function EditDialog<T extends Record<string, unknown>>({ open, onOpenChan
 }
 
 export const DemoNote = () => null;
+/** Temporary admin gate until real sign-in is connected. */
+export const ADMIN_FLAG = "nr-admin-demo";
