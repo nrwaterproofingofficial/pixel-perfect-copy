@@ -14,16 +14,265 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      certificates: {
+        Row: {
+          area: string
+          created_at: string
+          customer: string
+          end_date: string
+          id: string
+          location: string
+          number: string
+          signatory: string
+          start_date: string
+          system: string
+          warranty: string
+          work: string
+        }
+        Insert: {
+          area?: string
+          created_at?: string
+          customer?: string
+          end_date?: string
+          id?: string
+          location?: string
+          number?: string
+          signatory?: string
+          start_date?: string
+          system?: string
+          warranty?: string
+          work?: string
+        }
+        Update: {
+          area?: string
+          created_at?: string
+          customer?: string
+          end_date?: string
+          id?: string
+          location?: string
+          number?: string
+          signatory?: string
+          start_date?: string
+          system?: string
+          warranty?: string
+          work?: string
+        }
+        Relationships: []
+      }
+      enquiries: {
+        Row: {
+          created_at: string
+          id: string
+          leakage_area: string
+          location: string
+          media: string[]
+          message: string
+          name: string
+          notes: string
+          phone: string
+          property_type: string
+          service: string
+          source: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          leakage_area?: string
+          location?: string
+          media?: string[]
+          message?: string
+          name: string
+          notes?: string
+          phone: string
+          property_type?: string
+          service?: string
+          source?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          leakage_area?: string
+          location?: string
+          media?: string[]
+          message?: string
+          name?: string
+          notes?: string
+          phone?: string
+          property_type?: string
+          service?: string
+          source?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          after_images: string[]
+          before_images: string[]
+          completion_date: string
+          created_at: string
+          id: string
+          inspection: string
+          location: string
+          name: string
+          problem: string
+          progress_images: string[]
+          result: string
+          service: string
+          treatment: string
+        }
+        Insert: {
+          after_images?: string[]
+          before_images?: string[]
+          completion_date?: string
+          created_at?: string
+          id?: string
+          inspection?: string
+          location?: string
+          name: string
+          problem?: string
+          progress_images?: string[]
+          result?: string
+          service?: string
+          treatment?: string
+        }
+        Update: {
+          after_images?: string[]
+          before_images?: string[]
+          completion_date?: string
+          created_at?: string
+          id?: string
+          inspection?: string
+          location?: string
+          name?: string
+          problem?: string
+          progress_images?: string[]
+          result?: string
+          service?: string
+          treatment?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          created_at: string
+          id: string
+          media: string[]
+          name: string
+          rating: number
+          service: string
+          source: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          media?: string[]
+          name: string
+          rating?: number
+          service?: string
+          source?: string
+          text?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          media?: string[]
+          name?: string
+          rating?: number
+          service?: string
+          source?: string
+          text?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          image_url: string | null
+          short: string
+          slug: string
+          solution: string
+          sort_order: number
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          image_url?: string | null
+          short?: string
+          slug: string
+          solution?: string
+          sort_order?: number
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          image_url?: string | null
+          short?: string
+          slug?: string
+          solution?: string
+          sort_order?: number
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          data: Json
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          data?: Json
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          data?: Json
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_exists: { Args: never; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +399,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
