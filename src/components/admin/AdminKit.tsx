@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { EnquiryStatus } from "@/lib/enquiries";
+import { uploadMedia } from "@/lib/cms";
+import { toast } from "sonner";
 
-/** V1 demo auth flag only (no credentials stored). Replace with real secure auth. */
-export const ADMIN_FLAG = "nr-admin-demo";
 
 export function PageHeader({ title, intro, action }: { title: string; intro?: string; action?: ReactNode }) {
   return (
@@ -44,7 +44,15 @@ export function EditDialog<T extends Record<string, unknown>>({ open, onOpenChan
   const [draft, setDraft] = useState<T>(value);
   const [key, setKey] = useState(value);
   if (key !== value) { setKey(value); setDraft(value); }
+  const [uploading, setUploading] = useState(false);
   const set = (k: string, v: unknown) => setDraft((d) => ({ ...d, [k]: v }));
+  const upload = async (k: string, files: File[]) => {
+    setUploading(true);
+    try {
+      const urls = await Promise.all(files.map((f) => uploadMedia(f, k)));
+      setDraft((d) => ({ ...d, [k]: [...((d[k] as string[]) ?? []), ...urls] }));
+    } catch { toast.error("Upload failed"); } finally { setUploading(false); }
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
@@ -60,11 +68,20 @@ export function EditDialog<T extends Record<string, unknown>>({ open, onOpenChan
                   {f.options!.map((o) => <option key={o}>{o}</option>)}
                 </select>
               ) : f.type === "file" ? (
-                <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-input px-3 py-3 text-sm text-muted-foreground hover:border-secondary">
-                  <Upload className="size-4" />{Array.isArray(draft[f.key]) && (draft[f.key] as unknown[]).length ? `${(draft[f.key] as unknown[]).length} file(s)` : "Upload images / video"}
-                  <input type="file" multiple accept="image/*,video/*" className="sr-only"
-                    onChange={(e) => set(f.key, Array.from(e.target.files ?? []).map((file) => URL.createObjectURL(file)))} />
-                </label>
+                <div className="space-y-2">
+                  {Array.isArray(draft[f.key]) && (draft[f.key] as string[]).length > 0 && (
+                    <div className="flex flex-wrap gap-2">{(draft[f.key] as string[]).map((u, i) => (
+                      <div key={u + i} className="relative size-16 overflow-hidden rounded-md bg-muted">
+                        <img src={u} alt="" className="size-full object-cover" />
+                        <button type="button" className="absolute right-0.5 top-0.5 rounded bg-card px-1 text-xs" onClick={() => set(f.key, (draft[f.key] as string[]).filter((_, j) => j !== i))}>×</button>
+                      </div>))}</div>
+                  )}
+                  <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-input px-3 py-3 text-sm text-muted-foreground hover:border-secondary">
+                    <Upload className="size-4" />{uploading ? "Uploading…" : "Upload images"}
+                    <input type="file" multiple accept="image/*" className="sr-only" disabled={uploading}
+                      onChange={(e) => { const fs = Array.from(e.target.files ?? []); e.target.value = ""; if (fs.length) void upload(f.key, fs); }} />
+                  </label>
+                </div>
               ) : (
                 <Input type={f.type ?? "text"} value={String(draft[f.key] ?? "")} onChange={(e) => set(f.key, f.type === "number" ? Number(e.target.value) : e.target.value)} />
               )}
@@ -73,15 +90,11 @@ export function EditDialog<T extends Record<string, unknown>>({ open, onOpenChan
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-          <Button onClick={() => { onSave(draft); onOpenChange(false); }}>Save</Button>
+          <Button disabled={uploading} onClick={() => onSave(draft)}>Save</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-export const DemoNote = () => (
-  <p className="mb-4 rounded-lg border border-warning/40 bg-warning/10 px-4 py-2 text-xs text-foreground/80">
-    V1 preview: changes here are kept only until you refresh. Saving permanently will be enabled when the database is connected.
-  </p>
-);
+export const DemoNote = () => null;
