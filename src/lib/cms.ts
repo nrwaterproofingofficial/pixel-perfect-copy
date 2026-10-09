@@ -19,7 +19,7 @@ export const resolveImage = (u: string) => assets[u] ?? u;
 
 export type ServiceRow = { slug: string; title: string; short: string; solution: string; status: string; image_url: string | null; sort_order: number };
 
-export function mergeService(r: ServiceRow): Service & { image?: string } {
+export function mergeService(r: ServiceRow): Service & { image?: string | undefined } {
   const base = staticServices.find((s) => s.slug === r.slug);
   return {
     slug: r.slug, title: r.title, short: r.short, solution: r.solution || base?.solution || "",
