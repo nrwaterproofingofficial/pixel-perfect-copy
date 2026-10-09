@@ -33,7 +33,7 @@ function SiteLayout() {
   return (
     <div ref={shell} className="site-shell flex min-h-screen flex-col">
       <SiteHeader key={`h${settingsVersion}`} />
-      <main className="flex-1"><Outlet /></main>
+      <main key={`m${settingsVersion}`} className="flex-1"><Outlet /></main>
       <SiteFooter key={`f${settingsVersion}`} />
       <FloatingActions />
     </div>
