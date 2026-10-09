@@ -18,11 +18,29 @@ export type Enquiry = Omit<EnquiryInput, "files"> & {
 };
 
 export async function submitEnquiry(input: EnquiryInput): Promise<{ ok: true }> {
-  // TODO(backend): persist to `enquiries` + upload `input.files`.
-  await new Promise((r) => setTimeout(r, 600));
-  void input;
+  const { supabase } = await import("@/integrations/supabase/client");
+  const media: string[] = [];
+  for (const file of input.files.slice(0, 10)) {
+    const path = `incoming/${crypto.randomUUID()}-${file.name.replace(/[^\w.-]/g, "_")}`;
+    const { error } = await supabase.storage.from("enquiry-uploads").upload(path, file);
+    if (!error) media.push(path);
+  }
+  const { error } = await supabase.from("enquiries").insert({
+    name: input.name.slice(0, 120), phone: input.phone.slice(0, 30), location: input.location, property_type: input.propertyType,
+    leakage_area: input.leakageArea, service: input.service, message: input.message.slice(0, 4000), source: input.source, media,
+  });
+  if (error) throw error;
   return { ok: true };
 }
+
+type EnquiryRow = { id: string; name: string; phone: string; location: string; property_type: string; leakage_area: string; service: string;
+  message: string; source: string; status: string; notes: string; media: string[]; created_at: string };
+export type LiveEnquiry = Omit<Enquiry, "media"> & { media: string[] };
+export const toEnquiry = (r: EnquiryRow): LiveEnquiry => ({
+  id: r.id, name: r.name, phone: r.phone, location: r.location, propertyType: r.property_type, leakageArea: r.leakage_area,
+  service: r.service, message: r.message, source: r.source as EnquirySource, status: r.status as EnquiryStatus, notes: r.notes,
+  media: r.media, date: r.created_at.slice(0, 10),
+});
 
 export const enquiryStatuses: EnquiryStatus[] = ["New", "Contacted", "Inspection Scheduled", "Estimate Sent", "Converted", "Closed"];
 

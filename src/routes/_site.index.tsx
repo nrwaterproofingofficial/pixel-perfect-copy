@@ -3,8 +3,9 @@ import { ArrowRight, CheckCircle2, ShieldCheck, Search, Package, Brush, Layers, 
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading, ContactButtons, ServiceCard, CtaBand, ProjectCard, ReviewCard, FaqList } from "@/components/site/blocks";
 import { InspectionForm } from "@/components/site/InspectionForm";
-import { services, quickServiceSlugs, leakageInspection } from "@/data/services";
-import { images, inspectionChecks, processSteps, projects, reviews, faqs } from "@/data/content";
+import { quickServiceSlugs, leakageInspection } from "@/data/services";
+import { useServices, useProjects, useReviews } from "@/lib/cms";
+import { images, inspectionChecks, processSteps, faqs } from "@/data/content";
 import { seo } from "@/lib/seo";
 import { site, whatsappLink } from "@/lib/site";
 import architecturalRoof from "@/assets/architectural-roof.jpg";
@@ -23,6 +24,9 @@ const trust = [
 ] as const;
 
 function HomePage() {
+  const services = useServices();
+  const projects = useProjects();
+  const reviews = useReviews();
   const quick = quickServiceSlugs.flatMap((slug) => {
     const service = services.find((item) => item.slug === slug);
     return service ? [service] : [];

@@ -2,11 +2,13 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/site/SiteChrome";
 import { FloatingActions } from "@/components/site/extras";
 import { useEffect, useRef } from "react";
+import { useLiveSiteSettings } from "@/lib/cms";
 
 export const Route = createFileRoute("/_site")({ component: SiteLayout });
 
 function SiteLayout() {
   const shell = useRef<HTMLDivElement>(null);
+  const settingsVersion = useLiveSiteSettings();
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const observer = new IntersectionObserver((entries) => {
@@ -30,9 +32,9 @@ function SiteLayout() {
   }, []);
   return (
     <div ref={shell} className="site-shell flex min-h-screen flex-col">
-      <SiteHeader />
-      <main className="flex-1"><Outlet /></main>
-      <SiteFooter />
+      <SiteHeader key={`h${settingsVersion}`} />
+      <main key={`m${settingsVersion}`} className="flex-1"><Outlet /></main>
+      <SiteFooter key={`f${settingsVersion}`} />
       <FloatingActions />
     </div>
   );

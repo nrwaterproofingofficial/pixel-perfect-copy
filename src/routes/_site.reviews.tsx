@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section, ReviewCard, CtaBand } from "@/components/site/blocks";
-import { reviews } from "@/data/content";
+import { useReviews } from "@/lib/cms";
 import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/reviews")({
@@ -10,6 +10,7 @@ export const Route = createFileRoute("/_site/reviews")({
 });
 
 function Page() {
+  const reviews = useReviews();
   return (
     <>
       <PageHero eyebrow="Reviews" title="Our Work Speaks Through Our Customers." />

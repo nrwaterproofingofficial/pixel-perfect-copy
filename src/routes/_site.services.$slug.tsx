@@ -3,18 +3,18 @@ import { AlertTriangle, CheckCircle2, Search } from "lucide-react";
 import { PageHero, Section, SectionHeading, ContactButtons, FaqList, CtaBand, ProjectCard } from "@/components/site/blocks";
 import { InspectionForm } from "@/components/site/InspectionForm";
 import { getService } from "@/data/services";
-import { faqs, processSteps, projects } from "@/data/content";
+import { faqs, processSteps } from "@/data/content";
+import { useServices, useProjects } from "@/lib/cms";
 import type { EnquirySource } from "@/lib/enquiries";
 
 export const Route = createFileRoute("/_site/services/$slug")({
   loader: ({ params }) => {
-    const service = getService(params.slug);
-    if (!service) throw notFound();
-    return { slug: service.slug };
+    if (!/^[a-z0-9-]{1,80}$/.test(params.slug)) throw notFound();
+    return { slug: params.slug };
   },
   head: ({ loaderData }) => {
     const s = loaderData && getService(loaderData.slug);
-    if (!s) return { meta: [{ title: "Service not found" }, { name: "robots", content: "noindex" }] };
+    if (!s) return { meta: [{ title: "Waterproofing Service in Kurnool | NR Waterproofing" }, { name: "description", content: "Waterproofing and leakage treatment services in Kurnool." }, { property: "og:title", content: "Waterproofing Service in Kurnool" }, { property: "og:description", content: "Waterproofing and leakage treatment services in Kurnool." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] };
     const title = `${s.title} in Kurnool | NR Waterproofing Services`;
     return { meta: [
       { title }, { name: "description", content: s.short },
@@ -32,7 +32,11 @@ const sourceFor = (slug: string): EnquirySource =>
 
 function ServiceDetail() {
   const { slug } = Route.useLoaderData();
-  const s = getService(slug)!;
+  const live = useServices();
+  const allProjects = useProjects();
+  const s = live.find((x) => x.slug === slug) ?? getService(slug);
+  if (!s) return <div className="container-site py-24 text-center"><h1 className="text-2xl font-bold">Service not found</h1><Link to="/services" className="mt-4 inline-block text-secondary">View all services</Link></div>;
+  const projects = allProjects;
   const related = projects.filter((p) => p.service === s.title);
   const shown = related.length ? related : projects.slice(0, 1);
   return (

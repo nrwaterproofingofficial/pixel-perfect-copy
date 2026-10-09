@@ -24,7 +24,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { services } from "@/data/services";
+import { useServices } from "@/lib/cms";
+import { toast } from "sonner";
 import { submitEnquiry, type EnquirySource } from "@/lib/enquiries";
 import { whatsappLink, site } from "@/lib/site";
 
@@ -53,12 +54,14 @@ export function InspectionForm({ source = "Free Inspection", defaultService = ""
   const [selectedArea, setSelectedArea] = useState<string>("Terrace");
   const [selectedService, setSelectedService] = useState<string>(defaultService);
   const [refId, setRefId] = useState<string>("");
+  const services = useServices();
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     setState("sending");
     
+    try {
     await submitEnquiry({
       name: String(f.get("name")),
       phone: String(f.get("phone")),
@@ -70,6 +73,11 @@ export function InspectionForm({ source = "Free Inspection", defaultService = ""
       files,
       source,
     });
+    } catch {
+      setState("idle");
+      toast.error("Could not send your request. Please call or WhatsApp us.");
+      return;
+    }
 
     setRefId("NR-" + Math.floor(100000 + Math.random() * 900000));
     setState("done");
