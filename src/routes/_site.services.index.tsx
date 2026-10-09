@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section, ServiceCard, CtaBand, ContactButtons } from "@/components/site/blocks";
-import { services, leakageInspection } from "@/data/services";
+import { leakageInspection } from "@/data/services";
+import { useServices } from "@/lib/cms";
 import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/services/")({
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/_site/services/")({
 });
 
 function ServicesPage() {
+  const services = useServices();
   return (
     <>
       <PageHero eyebrow="Services" title="Waterproofing Services in Kurnool"

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section, ProjectCard, CtaBand } from "@/components/site/blocks";
-import { projects } from "@/data/content";
+import { useProjects } from "@/lib/cms";
 import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/projects")({
@@ -10,6 +10,7 @@ export const Route = createFileRoute("/_site/projects")({
 });
 
 function Page() {
+  const projects = useProjects();
   return (
     <>
       <PageHero eyebrow="Projects" title="Real problems. Proper treatment." intro="Each project shows what we found, what we did and how it turned out." />
