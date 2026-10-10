@@ -1,18 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Star } from "lucide-react";
 import { CrudList } from "@/components/admin/CrudList";
-import { reviews, type Review } from "@/data/content";
+import { type Review } from "@/data/content";
 import { services } from "@/data/services";
 
 export const Route = createFileRoute("/admin/reviews")({ component: Page });
 
-type Row = Review & { media?: string[] };
+type Row = Review & { media: string[] };
 
 function Page() {
   return (
     <CrudList<Row>
-      title="Reviews" intro="Manage customer reviews shown on the website." noun="review" searchKey="name"
-      initial={reviews}
+      title="Reviews" intro="Manage customer reviews shown on the website." noun="review" searchKey="name" table="reviews"
+      fromRow={(r) => ({ id: String(r.id), name: String(r.name), rating: Number(r.rating), text: String(r.text), service: String(r.service),
+        source: String(r.source) as Review["source"], media: Array.isArray(r.media) ? (r.media as string[]) : [] })}
+      toRow={(r) => ({ name: r.name || "Customer", rating: Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5))), text: r.text, service: r.service, source: r.source, media: r.media })}
       blank={{ name: "", rating: 5, text: "", service: services[0]!.title, source: "Google", media: [] }}
       fields={[
         { key: "name", label: "Customer Name" }, { key: "rating", label: "Rating (1–5)", type: "number" },
