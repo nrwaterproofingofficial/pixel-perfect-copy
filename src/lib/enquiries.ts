@@ -42,6 +42,16 @@ export const toEnquiry = (r: EnquiryRow): LiveEnquiry => ({
   media: r.media, date: r.created_at.slice(0, 10),
 });
 
+export const enquiriesQuery = {
+  queryKey: ["admin", "enquiries"],
+  queryFn: async () => {
+    const { supabase } = await import("@/integrations/supabase/client");
+    const { data, error } = await supabase.from("enquiries").select("*").order("created_at", { ascending: false });
+    if (error) throw error;
+    return (data as EnquiryRow[]).map(toEnquiry);
+  },
+};
+
 export const enquiryStatuses: EnquiryStatus[] = ["New", "Contacted", "Inspection Scheduled", "Estimate Sent", "Converted", "Closed"];
 
 export const sampleEnquiries: Enquiry[] = [
