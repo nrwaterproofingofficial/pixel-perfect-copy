@@ -2,7 +2,8 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useEffect, useState } from "react";
 import { LayoutDashboard, Inbox, FolderKanban, Star, Wrench, Award, Settings, LogOut, Menu, Droplet, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ADMIN_FLAG } from "@/components/admin/AdminKit";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Admin — NR Waterproofing" }, { name: "robots", content: "noindex" }] }),
@@ -23,13 +24,24 @@ function AdminLayout() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const [open, setOpen] = useState(false);
+  const qc = useQueryClient();
   useEffect(() => {
-    if (sessionStorage.getItem(ADMIN_FLAG) !== "1") navigate({ to: "/admin/login" });
-    else setReady(true);
+    let alive = true;
+    void (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return navigate({ to: "/admin/login", replace: true });
+      const { data } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle();
+      if (!data) { await supabase.auth.signOut(); return navigate({ to: "/admin/login", replace: true }); }
+      if (alive) setReady(true);
+    })();
+    return () => { alive = false; };
   }, [navigate]);
   if (!ready) return null;
 
-  const logout = () => { sessionStorage.removeItem(ADMIN_FLAG); navigate({ to: "/admin/login" }); };
+  const logout = async () => {
+    await qc.cancelQueries(); qc.removeQueries({ queryKey: ["admin"] });
+    await supabase.auth.signOut(); navigate({ to: "/admin/login", replace: true });
+  };
 
   return (
     <div className="flex min-h-screen bg-muted">
@@ -49,7 +61,7 @@ function AdminLayout() {
         </nav>
         <div className="space-y-1 border-t border-sidebar-border p-3">
           <a href="/" target="_blank" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-sidebar-accent"><ExternalLink className="size-4" />View website</a>
-          <button onClick={logout} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-sidebar-accent"><LogOut className="size-4" />Log out</button>
+          <button onClick={() => void logout()} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-sidebar-accent"><LogOut className="size-4" />Log out</button>
         </div>
       </aside>
       {open && <div className="fixed inset-0 z-30 bg-ink/40 lg:hidden" onClick={() => setOpen(false)} />}

@@ -2,13 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Inbox, Sparkles, Clock, Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { PageHeader, Panel, StatusBadge } from "@/components/admin/AdminKit";
-import { sampleEnquiries } from "@/lib/enquiries";
-import { projects } from "@/data/content";
+import { useQuery } from "@tanstack/react-query";
+import { enquiriesQuery } from "@/lib/enquiries";
+import { useProjects, resolveImage } from "@/lib/cms";
 
 export const Route = createFileRoute("/admin/")({ component: Dashboard });
 
 function Dashboard() {
-  const e = sampleEnquiries;
+  const e = useQuery(enquiriesQuery).data ?? [];
+  const projects = useProjects().slice(0, 5);
   const stats = [
     [Inbox, "Total Enquiries", e.length],
     [Sparkles, "New Enquiries", e.filter((x) => x.status === "New").length],
@@ -45,7 +47,7 @@ function Dashboard() {
           <ul className="divide-y divide-border">
             {projects.map((p) => (
               <li key={p.id} className="flex items-center gap-3 p-4">
-                <img src={p.after[0]} alt="" className="size-12 rounded-lg object-cover" />
+                <img src={p.after[0] ? resolveImage(p.after[0]) : undefined} alt="" className="size-12 rounded-lg object-cover" />
                 <div className="min-w-0"><p className="truncate text-sm font-semibold">{p.name}</p><p className="text-xs text-muted-foreground">{p.service} · {p.completionDate}</p></div>
               </li>
             ))}
