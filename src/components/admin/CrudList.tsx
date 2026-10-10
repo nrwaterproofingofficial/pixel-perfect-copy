@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { EditDialog, PageHeader, Panel, type FieldDef } from "./AdminKit";
 
-type Row = Record<string, unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Row = any;
 
 /** Reusable admin list backed by a database table: search, add, edit, delete. Saves go live on the website. */
 export function CrudList<T extends { id: string } & Record<string, unknown>>({ title, intro, noun, table, idColumn = "id", orderBy = "created_at", fromRow, toRow, fields, blank, render, searchKey, extraActions }: {
@@ -37,14 +38,14 @@ export function CrudList<T extends { id: string } & Record<string, unknown>>({ t
     const { error } = isNew
       ? await supabase.from(table).insert(row as never)
       : await supabase.from(table).update(row as never).eq(idColumn, v.id);
-    if (error) return toast.error(`Could not save: ${error.message}`);
+    if (error) { toast.error(`Could not save: ${error.message}`); return; }
     toast.success(`${noun[0]!.toUpperCase() + noun.slice(1)} saved — live on the website`);
     setEditing(null); refresh();
   };
   const remove = async (item: T) => {
     if (!confirm(`Delete this ${noun}?`)) return;
     const { error } = await supabase.from(table).delete().eq(idColumn, item.id);
-    if (error) return toast.error(`Could not delete: ${error.message}`);
+    if (error) { toast.error(`Could not delete: ${error.message}`); return; }
     toast.success("Deleted"); refresh();
   };
 

@@ -35,7 +35,7 @@ function Page() {
     const next: SiteSettings = {};
     for (const [k] of fields) next[k] = String(f.get(k) ?? "").trim();
     const { error } = await supabase.from("site_settings").upsert({ id: "main", data: next });
-    if (error) return toast.error("Could not save settings");
+    if (error) { toast.error("Could not save settings"); return; }
     toast.success("Settings saved — live on the website");
     void qc.invalidateQueries({ queryKey: ["admin", "settings"] }); void qc.invalidateQueries({ queryKey: ["cms"] });
   };
