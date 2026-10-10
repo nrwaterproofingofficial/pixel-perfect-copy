@@ -33,7 +33,7 @@ function Enquiries() {
   }, [current?.id]); // eslint-disable-line react-hooks/exhaustive-deps
   const update = async (id: string, patch: { status?: EnquiryStatus; notes?: string }) => {
     const { error } = await supabase.from("enquiries").update(patch).eq("id", id);
-    if (error) return toast.error("Could not save");
+    if (error) { toast.error("Could not save"); return; }
     toast.success("Saved"); void qc.invalidateQueries({ queryKey: enquiriesQuery.queryKey });
   };
 
