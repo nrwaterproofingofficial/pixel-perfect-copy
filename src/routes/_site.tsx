@@ -3,11 +3,13 @@ import { SiteHeader, SiteFooter } from "@/components/site/SiteChrome";
 import { FloatingActions } from "@/components/site/extras";
 import { useEffect, useRef } from "react";
 import { useLiveSiteSettings } from "@/lib/cms";
+import { useLiveSync } from "@/lib/live-sync";
 
 export const Route = createFileRoute("/_site")({ component: SiteLayout });
 
 function SiteLayout() {
   const shell = useRef<HTMLDivElement>(null);
+  useLiveSync();
   const settingsVersion = useLiveSiteSettings();
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
