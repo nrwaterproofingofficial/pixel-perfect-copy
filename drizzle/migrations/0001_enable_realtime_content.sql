@@ -1,0 +1,1 @@
+ALTER PUBLICATION supabase_realtime ADD TABLE public.services, public.projects, public.reviews, public.site_settings, public.enquiries, public.certificates;
