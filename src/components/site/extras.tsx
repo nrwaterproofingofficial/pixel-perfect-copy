@@ -127,7 +127,7 @@ export function FloatingActions() {
   return (
     <>
       <div className="scroll-progress" style={{ transform: `scaleX(${p})` }} />
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+      <div className="fab-stack fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
         <button type="button" aria-label="Back to top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="fab-top grid size-11 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft" data-show={p > 0.08}>
           <ArrowUp className="size-5" />
@@ -137,6 +137,11 @@ export function FloatingActions() {
           <MessageCircle className="size-7" />
         </a>
       </div>
+      <nav className="mobile-bar" aria-label="Quick contact">
+        <a href={site.phoneHref} className="bg-muted text-foreground"><Phone className="size-4" />Call</a>
+        <a href={whatsappLink()} target="_blank" rel="noreferrer" className="bg-whatsapp text-whatsapp-foreground"><MessageCircle className="size-4" />WhatsApp</a>
+        <Link to="/contact" className="bg-primary text-primary-foreground">Free Inspection</Link>
+      </nav>
     </>
   );
 }
