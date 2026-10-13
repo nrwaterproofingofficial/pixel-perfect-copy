@@ -1,3 +1,4 @@
+import { useLiveSync } from "@/lib/live-sync";
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LayoutDashboard, Inbox, FolderKanban, Star, Wrench, Award, Settings, LogOut, Menu, Droplet, ExternalLink } from "lucide-react";
@@ -25,6 +26,7 @@ function AdminLayout() {
   const [ready, setReady] = useState(false);
   const [open, setOpen] = useState(false);
   const qc = useQueryClient();
+  useLiveSync();
   useEffect(() => {
     let alive = true;
     void (async () => {
