@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, ArrowUp, Calculator, MoveHorizontal } from "lucide-react";
+import { MessageCircle, ArrowUp, Calculator, MoveHorizontal, Phone } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { whatsappLink } from "@/lib/site";
+import { whatsappLink, site } from "@/lib/site";
 
 /** Animated number that counts up when scrolled into view. */
 export function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
